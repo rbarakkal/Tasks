@@ -9,21 +9,9 @@ module.exports = {
         console.log(req.params.user);
         var s = 0;
         var l = 1;
-
+        var par = req.params.user;
         if (req.query.pagging == 'true') {
-
-            user.find({ 'user': req.params.user }, function (error, result) {
-                if (error) {
-                    res.json(error);
-                }
-                else if (!result) {
-                    return res.status(400).json([]);
-                }
-                else {
-                    return res.status(200).json(result);
-                }
-
-            }).skip(s).limit(l);
+            dataretrive(par,s,l,res);
         }
         else {
             s = parseInt(req.query.skip);
@@ -31,18 +19,7 @@ module.exports = {
 
             if (s >= 0) {
                 if (l > 0) {
-                    user.find({ 'user': req.params.user }, function (error, result) {
-                        if (error) {
-                            res.json(error);
-                        }
-                        else if (!result) {
-                            return res.status(400).json([]);
-                        }
-                        else {
-                            return res.status(200).json(result);
-                        }
-
-                    }).skip(s).limit(l);
+                    dataretrive(par,s,l,res);
                 }
                 else
                     res.json({ Message: "Enter a Valid +ve limit." });
@@ -53,3 +30,19 @@ module.exports = {
     }
 }
 
+//=============================  Helper Function  =================
+
+var dataretrive = function(par,s, l,res){
+    user.find({ 'user': par }, function (error, result) {
+        if (error) {
+            res.json(error);
+        }
+        else if (!result) {
+            return res.status(400).json([]);
+        }
+        else {
+            return res.status(200).json(result);
+        }
+
+    }).skip(s).limit(l);
+}
