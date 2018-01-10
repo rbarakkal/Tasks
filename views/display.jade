@@ -1,0 +1,35 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    h1 Not logged-in Socially
+    form(method="GET" action="/social")
+        p Page No.
+            select(name='no_paging')
+                option(value='1') 1    
+                option(value='2') 2
+                option(value='3') 3
+                option(value='4') 4
+                option(value='5') 5     
+            input(type='submit' value='Submit')
+    table#ftable
+        thead
+            tr
+                th ID
+                th First_Name
+                th Last_Name
+                th Email
+        tbody
+            if datas.length
+                each data in datas
+                    tr
+                        td #{data._id}
+                        td #{data.first_name}
+                        td #{data.last_name}
+                        td #{data.user_email}
+            else
+                h2 No Data in Database
+
+

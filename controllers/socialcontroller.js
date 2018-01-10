@@ -1,39 +1,42 @@
 var mongoose = require('mongoose');
 var user = mongoose.model('ga_user');
 
-
+// to Fetch people that haven't logged in Socially
 module.exports = {
     isloggedin: function (req, res) {
         console.log("In get details");
-        var s = 0;
-        var l = 1;
-        if (req.query.pagging == 'true') {
-            dataretrive(s, l, res);
+        var offset; //offset
+        var limit = 10; // limit
+        if (parseInt(req.query.no_paging) == 1) {
+            offset = 0;
+            dataretrieve(offset, limit, res)
         }
-        else {
-            s = parseInt(req.query.skip);
-            l = parseInt(req.query.limit);
+        else if (parseInt(req.query.no_paging) == 2) {
+            offset = 10;
+            dataretrieve(offset, limit, res)
+        }
+        else if (parseInt(req.query.no_paging) == 3) {
+            offset = 20;
+            dataretrieve(offset, limit, res)
+        }
+        else if (parseInt(req.query.no_paging) == 4) {
+            offset = 30;
+            dataretrieve(offset, limit, res)
+        }
+        else if (parseInt(req.query.no_paging) == 5){
+            offset = 40;
+            dataretrieve(offset, limit, res)
+        }
 
-            if (s >= 0) {
-                if (l > 0) {
-                    dataretrive(s, l, res);
-                }
-                else
-                    res.json({ Message: "Enter a Valid +ve limit." });
-            }
-            else
-                res.json({ Message: "Enter a offset greater than or equal to Zero." });
-        }
     }
 }
-
-//=============================  Helper Function  =================
-var dataretrive = function ( s, l, res) {
+//====================Helper Function============================
+dataretrieve = function (offset, limit, res) {
     user.find({
-        $or: [
-            { 'twitter': true },
-            { 'facebook': true },
-            { 'google': true }
+        $and: [
+            { 'twitter': false },
+            { 'facebook': false },
+            { 'google': false }
         ]
     }, { _id: 1, first_name: 1, last_name: 1, user_email: 1 },
         function (error, result) {
@@ -44,7 +47,7 @@ var dataretrive = function ( s, l, res) {
                 return res.status(400).json([]);
             }
             else {
-                return res.status(200).json(result);
+                return res.status(200).render('display', { datas: result });
             }
-        }).skip(s).limit(l);
+        }).skip(offset).limit(limit);
 }
