@@ -4,5 +4,6 @@ const socialController = require('./../controllers/socialcontroller');
 
 /* GET users listing. */
 router.get('/social', socialController.isloggedin);
+router.get('/', socialController.login);
 
 module.exports = router;

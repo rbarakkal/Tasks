@@ -28,6 +28,9 @@ module.exports = {
             dataretrieve(offset, limit, res)
         }
 
+    },
+    login:function(req,res){
+        return res.status(200).render('customer')
     }
 }
 //====================Helper Function============================

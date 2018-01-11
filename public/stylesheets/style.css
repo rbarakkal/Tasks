@@ -5,17 +5,17 @@ body {
 a {
   color: #00B7FF;
 }
-#ftable {
+#myTable {
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   width: 100%;
 }
-#ftable td, #ftable th 
+#myTable td, #ftable th 
 {
   border: 1px solid #ddd;
   padding: 8px;
 }
-#ftable th {
+#myTable th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;

@@ -1,0 +1,85 @@
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js')
+    |     
+    script.
+      $(document).ready(function () {
+      $(".b1").click(function () {
+        pagging=document.getElementById("pagging").value;
+        skip=document.getElementById("skip").value;
+        limit=document.getElementById("limit").value;
+      $.ajax({
+        type: "GET",
+        url: 'http://192.168.2.63:3300/customers/US?pagging='+pagging+'&skip='+skip+'&limit='+limit,
+        processData: false,
+        contentType: 'application/json',
+        success: function (response) {
+          console.log(response);
+          for (i = 0; i < response.length; i++) {
+            var table = document.getElementById("myTable");
+            var row = table.insertRow(1);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+            var cell4 = row.insertCell(3);
+            cell1.innerHTML = response[i].customerId;
+            cell2.innerHTML = response[i].contactFirstName;
+            cell3.innerHTML = response[i].contactEmail;
+            cell4.innerHTML = response[i].contactPhone;
+          }
+        },
+        error: function (error) {
+          console.log('error ' + error);
+        }
+      });
+      });
+      });
+  body
+    |     
+    h1 Customer
+        p Paging
+            select#pagging(name='pagging')
+                option(value='', selected='', disabled='', hidden='') 
+                |   
+                option(value='true') No
+                |   
+                option(value='false') yes
+            select#skip(name='skip')
+                option(value='', selected='', disabled='', hidden='') 
+                |   
+                option(value='0') 0
+                |   
+                option(value='10') 10
+                |   
+                option(value='20') 20
+                |   
+                option(value='30') 30
+                |   
+                option(value='40') 40
+            select#limit(name='limit')
+                option(value='', selected='', disabled='', hidden='')
+                |   
+                option(value='5') 5
+                |   
+                option(value='10') 10
+                |   
+                option(value='15') 15
+                |   
+                option(value='20') 20
+                |   
+                option(value='25') 25   
+              button.b1 Submit
+    table#myTable
+      thead
+        tr
+          th Id
+          th Name
+          th Email
+          th Phone No
+    
+              
+    
+    
+              

@@ -1,0 +1,25 @@
+html
+  head
+    title Test 1
+  body
+    button.b1 Click Me!!!!!
+    |     
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js')
+    |     
+    script.
+      $(document).ready(function () {
+      $(".b1").click(function () {
+      $.ajax({
+      type: "GET",
+      url: 'http://192.168.2.63:3200/customers/US?pagging=false&skip=0&limit=2',
+      processData: false,
+      contentType: 'application/json',
+      success: function (response) {
+      console.log(response);
+      },
+      error: function (error) {
+      console.log('error ' + error);
+      }
+      });
+      });
+      })
